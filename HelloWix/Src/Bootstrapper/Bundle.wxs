@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Bundle Name="Bootstrapper" Version="1.0.0.0" Manufacturer="StuOrg" UpgradeCode="223a5b09-ca1b-4c11-ac4a-41e7aa5536ea">
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+
+		<Chain>
+			<PackageGroupRef Id="NetFx45Web"/>
+			<MsiPackage SourceFile="$(var.HelloWix.TargetPath)" /> <!-- Need a project reference for this to work -->
+		</Chain>
+	</Bundle>
+</Wix>

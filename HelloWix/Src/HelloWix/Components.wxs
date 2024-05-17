@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER"> <!-- all components will have their Directory attribute set to INSTALLFOLDER -->
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+
+      <Component Id="Hosts">
+        <File Source="c:\windows\system32\drivers\etc\hosts" KeyPath="yes"/> <!-- absolute path. KeyPath: marks the file as the key path of the entire component: windows will replace this file if repair is needed.
+        Not needed if component:file mapping is 1:1 as its created automatically for first child of component -->  
+       </Component>
+      
+      <Component Id="Foo1">
+        <File Id="f_foo1.txt" Source="foo.txt" Name="foo1.txt" ><!-- look inthe same dir as the wix source is in.Rename to newname.txt on deployment -->  
+          <Shortcut Id="Foo1Shortcut" Name="Foo1.txt" 
+                    Description="My description" 
+                    Directory="HelloWixShortcuts"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Advertise="yes" 
+                    Icon="appicon.ico" /> <!-- Adverties shortcut means if the file being refered to is deleted, the shortcut will still work as it will repair the referred to file
+                    additionally advertised means that the file is being referred to is being installed by this application and does not already exist on the OS-->
+        </File> 
+        <RemoveFolder Id="DeleteShortcutsFolder" Directory="HelloWixShortcuts" On="uninstall"/>
+      </Component>
+      
+      <Component Id="Foo2">
+        <File Source="myfolder\foo2.txt"/> <!-- relative path: look inthe same dir as the wix source is in. 
+        Not specifying Id will default to using Source as Id --> 
+      </Component>      
+      <Component Id="Foo3">				 
+        <File Source="myfolder\foo3.txt" 
+							 Vital="no"
+							 ReadOnly="yes"
+							 Hidden="yes"/> <!-- readonly, hidden -->
+      </Component>      
+      <Component Id="Foo4">				 
+        <File Source="myfolder\foo4.txt"/>
+      </Component>   
+  
+    <Component Id="MyAppExe">
+      <File Source="$(var.MyApp.TargetPath)" /> <!-- referene a preprocessor variable ie from our referenced project-->
+    </Component>
+  
+		</ComponentGroup>
+    
+    <!-- All my product documentation components -->
+    <ComponentGroup Id="Docs" Directory="docs">
+      <Component Id="doc1">
+        <File Source="mydocumentation\doc1.txt" />
+      </Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="ModulesComponentGroup" Directory="modules">      
+      <Component Id="ModuleA">
+        <File Source="modulea\modulea.txt" />
+      </Component>    
+      <Component Id="ModuleB">
+        <File Source="moduleb\moduleb.txt" />
+      </Component>    
+      <Component Id="ModuleC">
+        <File Source="modulec\modulec.txt" />
+      </Component>      
+    </ComponentGroup>
+    
+    <Component  Id="UninstallShortcut" Guid="*" Directory="HelloWixShortcuts" >
+      
+      <!-- create a registry key to serve as a keypath as a non-advertised shortcut cannot be a keypath for a component -->
+      <RegistryValue Root="HKCU" Key="Software\StuOrg\HelloWix" Name="installed" Type="integer" KeyPath="yes" Value="1" />
+      <!-- A non-advertised shortcut-->
+      <Shortcut Id="UninstallThisProduct" 
+                Name="Uninstll HelloWix" 
+                Description="Uinstalls HelloWix"
+                Target="[System64Folder]msiexec.exe" 
+                Arguments="/x [ProductCode]" />
+    </Component>
+    
+    
+	</Fragment>
+</Wix>
