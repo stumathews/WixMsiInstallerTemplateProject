@@ -1,69 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="HelloWix" Language="1033" 
+  
+  <!-- Note that the * means that a new Product Id GUID will be generated every time the MSI package is built -->
+	<Product Id="*"
+           Name="HelloWix" Language="1033" 
            Version="1.0.0.0" 
            Manufacturer="StuOrg" 
            UpgradeCode="0b57ad7b-48a8-42ba-a851-eb6a5f8cfa62">
     
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"
+             Keywords="Installer" Description="StuOrg's HelloWix 1.0 Installer"
+             Comments="HellowWix is a registered trademark of StuOrg Ltd." Manufacturer="StuOrg."/> <!-- Package Guid changes with each new new built -->
 
     <!-- Shown if the user tries to install a older version of this package -->
 		<MajorUpgrade AllowDowngrades="no" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     
     <!-- Automatically assignes files to cab files. EmbedCab will embed the cab files into the msi file which is more self-contained -->
-		<MediaTemplate EmbedCab="yes" />
-  
+		<MediaTemplate EmbedCab="yes" />  
 
-    <!-- UIRef needs the WixUIExtension.dll to be referenced in the wix vs studio project-->
-    <!--<UIRef Id="WixUI_Minimal"/>-->
-    <UIRef Id="WixUI_FeatureTree"/>
-    <!--<UIRef Id="WixUI_Advanced"/>-->
+    <!-- NB: UIRef needs the WixUIExtension.dll to be referenced in the wix vs studio project -->
+    <UI>
+      <!-- Other UIRef options include: WixUI_Minimal, WixUI_Advanced, WixUI_FeatureTree -->
+      <UIRef Id="WixUI_FeatureTree"/>
+      
+      <!-- Need to reference WixUtilExtension.dll for this to work. This adds a checkbox to the UI to launch the application-->
+      <Publish Dialog="ExitDialog"
+           Control="Finish" 
+           Event="DoAction" 
+           Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+    </UI>
     
-     <!-- Wix UI customizations -->
-    <WixVariable Id="WixUILicenseRtf" Value="license.rtf"/>
-    <WixVariable Id="WixUIDialogBmp" Value="dlgbmp.bmp"/>
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf"/> <!-- Set the license -->
+    <WixVariable Id="WixUIDialogBmp" Value="dlgbmp.bmp"/> <!-- Set the installer image: 493 by 312 pixels, this bitmap will appear on the first page of the installer. -->  
+    <!--
+    <WixVariable Id="WixUIBannerBmp" Value="path\banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="path\dialog.bmp" />
+    <WixVariable Id="WixUIExclamationIco" Value="path\exclamation.ico" />
+    <WixVariable Id="WixUIInfoIco" Value="path\information.ico" />
+    <WixVariable Id="WixUINewIco" Value="path\new.ico" />
+    <WixVariable Id="WixUIUpIco" Value="path\up.ico" />
     
-    <PropertyRef Id="NETFRAMEWORK45"/>
+     See https://www.firegiant.com/docs/wix/v3/tutorial/user-interface/ui-wizardry/ for more on what these mean.
     
-    <!-- Setup Target:-->
+    -->
     
-    <!-- Components must be assigned to a feature to be installed. -->
-		<Feature Id="ProductFeature" Title="Product Files" 
-             Description="My feature is so cool" 
-             Level="1"
-             Absent="disallow"
-             AllowAdvertise="no"> <!-- sets the InstallLevel property. 1 means feature is installed locally. 0 means feature is disabled.
-             absent=disallow means the feature cannot be disabled-->
-			<ComponentGroupRef Id="ProductComponents" /> <!-- OR secific component as: <ComponentRef Id="MyComponentId"/> -->
-      <ComponentRef Id="UninstallShortcut"/>
+    <!-- This adds support for launching the installed application after setup finished. See https://wixtoolset.org/docs/v3/howtos/ui_and_localization/run_program_after_install/ -->
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch MyApp" />    
+    <Property Id="WixShellExecTarget" Value="$(var.MyApp.TargetDir)$(var.MyApp.TargetName).exe" />
+    <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+    
+    
+		<Feature Id="ProductFeature" Title="Product Files" Description="My feature is so cool" Level="1" Absent="disallow" AllowAdvertise="no" Display="expand" >       
+      <!-- Note: Level attribure sets the InstallLevel property. Value of 1 means feature is installed locally, 0 means feature is disabled. -->
+      <!-- Note: absent=disallow means this feature cannot be disabled by the user in the UI -->			
+      <!-- Note: components must be assigned to a feature for that component to be installed. -->
+      
+      <!-- These are the components that will be installed when this featured is marked for installation by the user-->
+      <ComponentGroupRef Id="ProductComponents" />
+      
+      <!-- Note: We can embedd features within features to get a tree-like representation in the UI during feature selection -->
+      
+      <!-- Module A feature -->
       <Feature Id="ModuleA" Title="Module A" >
-        <ComponentRef Id="ModuleA"/>
+        <ComponentRef Id="ModuleA_Comp"/>
       </Feature>
+      
+      <!-- Module B feature -->
       <Feature Id="ModuleB" Title="Module B" >
-        <ComponentRef Id="ModuleB"/>
+        <ComponentRef Id="ModuleB_Comp"/>
       </Feature>
+        
+      <!-- Module C feature -->
       <Feature Id="ModuleC" Title="Module C" >
-        <ComponentRef Id="ModuleC"/>
+        <ComponentRef Id="ModuleC_Comp"/>
       </Feature>
-		</Feature>
     
+		</Feature>
+        
     <Feature Id="DocumentationFeature" Title="Documentation" >
-      <ComponentGroupRef Id="Docs" />
+      <ComponentGroupRef Id="Docs_Comp" />
     </Feature>
     
-    <Condition Message="Foo folder must exist in c:\">
-      <![CDATA[Installed OR FOOFOLDER]]>
-    </Condition>
+    <!-- Launch condition that must be met: stop the installation if our conditions are not met-->
+    <!--<Condition Message="Foo folder must exist in c:\">
+      <![CDATA[FOOFOLDER]]>
+    </Condition>-->
     
+    <!-- Pull in property from WixNetFxExtension that tells us if .net 4.5 is installed or not -->    
+    <PropertyRef Id="NETFRAMEWORK45"/> <!-- To read the value of any of the NETFRAMEWORK45 proprty from WinNetFxExtension, you need to reference to property first -->    
     <Condition Message="Need .NET framwork 4.5. Please install it first">
       <![CDATA[Installed OR NETFRAMEWORK45]]>
     </Condition>
     
+    <!-- Custom actions need to be mentioned in Product section and scheduled in the InstallExecute Sequence -->
     <CustomAction Id="MyCustomActionId" Property="Foo" Value="[INSTALLFOLDER]"/> <!-- Set Foo property to whatever the user typed/specified  (Type 51 Custom Action)--> 
+    
+    <!-- Reorder the actions performed by the server side (Windows Installer)-->
     <InstallExecuteSequence>
+      <!-- Schedule a standard action within the InstallExecuteSequence table -->
       <Custom Action="MyCustomActionId" After="CostFinalize" >
         <![CDATA[NOT Installed]]>
       </Custom>
+      <!-- Change the order of some existing actions in the InstallExecuteSequence sequence table
+      <LaunchConditions After='AppSearch' />
+      <RemoveExistingProducts After='InstallFinalize' />
+      -->
+    
+      <!-- Schedule a standard action if the condition is met
+      <ScheduleReboot After='InstallFinalize'>Version9X</ScheduleReboot>
+      -->
+    
     </InstallExecuteSequence>
     
     <SetProperty Id="Foo" Value="[INSTALLFOLDER]" Sequence="execute" After="CostFinalize">  <!-- This is equavalent to the above type 51 custom action  -->
@@ -73,14 +119,20 @@
 
 	<Fragment>
     
-    <Icon Id="appicon.ico" SourceFile="app.ico" />
-    
+    <!-- Set the installer icon -->
+    <Icon Id="appicon.ico" SourceFile="app.ico" />    
     
     <!-- Directories moved to Directories.wxs -->
     <!-- Component definitions moved to Componnets.wxs -->
     
+    <!-- Set a public property (must be ALL uppercase) -->
+    <Property Id="NAME" Value="Stuart"/>
+    
+    <!-- Set a private property (must incl lowercase chars) -->
+    <Property Id="surname" Value="Mathews"/>
+    
     <Property Id="FOOFOLDER">
-      <DirectorySearch Id="SearchDirFoo" Path="c:\foo"/>
+      <DirectorySearch Id="SearchDirFoo" Path="c:\foo" />
     </Property>
     
     <Property Id="WINDOWSVERSION">

@@ -2,16 +2,11 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
 	<Fragment>
   <!-- Setup destination directories -->
-		  <Directory Id="TARGETDIR" Name="SourceDir"> <!-- Never change this.-->
+		  <Directory Id="TARGETDIR" Name="SourceDir"> <!-- The root destination folder for the whole installation is predefiend. Never change this.-->
 			  <Directory Id="ProgramFilesFolder"> <!-- Predefined directory, ProgramFilesFolder, does not need a Name attribute -->
 				  <Directory Id="INSTALLFOLDER" Name="HelloWix" > <!-- Id is the primary key in the directory table. This will also be made into a public property-->
             <Directory Id="docs" Name="docs"/>
             <Directory Id="modules" Name="modules"/>
-          </Directory>
-        
-          <!-- -->
-          <Directory Id="ProgramMenuFolder">
-            <Directory Id="HelloWixShortcuts" Name="HelloWix" />
           </Directory>
 			  </Directory>
 		  </Directory>
