@@ -24,7 +24,7 @@
 							 Vital="no"
 							 ReadOnly="yes"
 							 Hidden="yes"/> <!-- readonly, hidden -->
-      </Component>      
+      </Component>    
   
       <Component Id="Foo4_Comp">				 
         <File Source="myfolder\foo4.txt"/>

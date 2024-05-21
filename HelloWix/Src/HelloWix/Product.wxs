@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   
-  <!-- Note that the * means that a new Product Id GUID will be generated every time the MSI package is built -->
-	<Product Id="*"
-           Name="HelloWix" Language="1033" 
-           Version="1.0.0.0" 
+  <!-- We can use if statements -->
+  
+  <?if $(var.Platform)=x64 ?>
+    <!-- Define our own variable called ProductCode which will be available via $(var.ProductCode)-->
+    <?define ProductCode = "{859E52C8-A05B-4533-A128-2C4148CEE6B2}" ?>
+  <?else?>
+    <?define ProductCode = "{859E52C8-A05B-4533-A128-2C4148CEE6B2}" ?>
+  <?endif?>
+  
+  <?define Version = 1.0.0.0 ?>
+  
+  <!-- Note that the if we use '*' instead of $(var.ProductCode), that means that a new Product Id GUID will be generated every time the MSI package is built -->
+	<!-- Note: we can refer to localized strings and substiture the product code variable -->
+  <Product Id="$(var.ProductCode)"
+           Name="!(loc.ProductName_$(var.Platform))" Language="1033" 
+           Version="$(var.Version)" 
            Manufacturer="StuOrg" 
            UpgradeCode="0b57ad7b-48a8-42ba-a851-eb6a5f8cfa62">
     
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"
              Keywords="Installer" Description="StuOrg's HelloWix 1.0 Installer"
-             Comments="HellowWix is a registered trademark of StuOrg Ltd." Manufacturer="StuOrg."/> <!-- Package Guid changes with each new new built -->
+             Comments="HellowWix is a registered trademark of StuOrg Ltd." Manufacturer="StuOrg."         
+    /> <!-- Package Guid changes with each new new built -->
 
     <!-- Shown if the user tries to install a older version of this package -->
 		<MajorUpgrade AllowDowngrades="no" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -115,15 +128,15 @@
     <SetProperty Id="Foo" Value="[INSTALLFOLDER]" Sequence="execute" After="CostFinalize">  <!-- This is equavalent to the above type 51 custom action  -->
       <![CDATA[NOT Installed]]> <!-- Condition for this custom action -->
     </SetProperty>
-	</Product>
-
-	<Fragment>
     
     <!-- Set the installer icon -->
-    <Icon Id="appicon.ico" SourceFile="app.ico" />    
+    <Icon Id="appicon.ico" SourceFile="$(var.MyApp.ProjectDir)\app.ico" /> 
     
-    <!-- Directories moved to Directories.wxs -->
-    <!-- Component definitions moved to Componnets.wxs -->
+    <!-- Use the appicon.ico for this installer (shows up in Add/Remove programs) -->
+    <Property Id="ARPPRODUCTICON">appicon.ico</Property> 
+    
+    <!-- Help/Support website (Shows in the App/Remove programs)-->
+    <Property Id="ARPURLINFOABOUT">https://www.stuartmathews.com</Property>
     
     <!-- Set a public property (must be ALL uppercase) -->
     <Property Id="NAME" Value="Stuart"/>
@@ -139,5 +152,9 @@
       <RegistrySearch Id="winver" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion" Name="CurrentVersion" Type="raw"/>
     </Property>
     
-	</Fragment>
+	</Product>
+
+  <!-- Directories moved to Directories.wxs -->
+  <!-- Component definitions moved to Componnets.wxs -->
+
 </Wix>

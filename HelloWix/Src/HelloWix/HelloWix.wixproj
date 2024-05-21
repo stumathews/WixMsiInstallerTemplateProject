@@ -20,6 +20,15 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components.wxs" />
     <Compile Include="Directories.wxs" />
@@ -52,6 +61,9 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="common.wxl" />
+  </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
@@ -72,4 +84,20 @@
 	<Target Name="AfterBuild">
 	</Target>
 	-->
+  <!-- Here is an example of publishing a .net core app, and then using heat to harvest all the components into a .wsx file which
+  you can reference in the installer. see https://nblumhardt.com/2017/04/netcore-msi/ -->
+  <!-- 
+  <Target Name="BeforeBuild">
+  <Exec Command="dotnet publish ..\..\src\Datalust.ClefTool\Datalust.ClefTool.csproj -c $(Configuration) -r win10-x64" />
+  <PropertyGroup>
+    <LinkerBaseInputPaths>..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish</LinkerBaseInputPaths>
+    <DefineConstants>BasePath=..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish</DefineConstants>
+  </PropertyGroup>
+  <HeatDirectory OutputFile="ClefTool.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="ClefTool_Project" SuppressCom="true"
+    Directory="..\..\src\Datalust.ClefTool\bin\$(Configuration)\netcoreapp1.1\win10-x64\publish"
+    SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true"
+    ToolPath="$(WixToolPath)" PreprocessorVariable="var.BasePath" Transforms="RemovePdbs.xslt" />
+</Target>
+  
+  -->
 </Project>

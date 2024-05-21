@@ -15,6 +15,8 @@
     WiX Standard Bootstrapper Application exists in the WixBalExtension.dll -->
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
       <bal:WixStandardBootstrapperApplication LicenseFile="License.rtf" LogoFile="Logo.png" />
+      <!-- If you're boostrapper application needs some prerequsites to run, you can add them here-->
+      <!--<Payload SourceFile="path\to\en-us\resources.dll" />-->
     </BootstrapperApplicationRef>
     
     <!-- Search the registry and create two variables to hold the results (Needs WixUtilExtension.dll to be references for this to work)-->
@@ -24,8 +26,11 @@
     
     
     
-    <!-- Chain lists all the packages that need to be installed -->
+    <!-- Chain contains the ordered list of packages that make up the bundle, and which need to be installed -->
 		<Chain>
+      <!-- PackageGroupRef refers to a Group of Payloads (dependnecies) elsewhere in a fragment (See other.wxs for the defintion of MyPackage)-->
+      <!--<PackageGroupRef Id="MyPackage"/>-->
+      
 			<PackageGroupRef Id="NetFx45Web"/>
             
       <!-- We could bundle the .net 4.5.1 setup with the boostrapper and run it if the registry search revels that its not installed -->

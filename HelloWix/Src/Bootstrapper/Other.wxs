@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- A deployable componnet can be added to an existing chain element in a bundle-->
+		<!--<PackageGroup Id="MyPackage">
+        <ExePackage 
+          SourceFile="[sources]\packages\shared\MyPackage.exe"
+          DetectCondition="ExeDetectedVariable"
+          DownloadUrl="http://example.com/?mypackage.exe"
+          InstallCommand="/q /ACTION=Install"
+          RepairCommand="/q ACTION=Repair /hideconsole"
+          UninstallCommand="/q ACTION=Uninstall /hideconsole">
+            
+            // Add some required dependecies for this exe to work
+            <Payload SourceFile="path\to\en-us\resources.dll" />
+            <PayloadGroupRef Id="ResourceGroupforJapanese" />
+          
+          </ExePackage>
+    </PackageGroup>-->
+	</Fragment>
+</Wix>
