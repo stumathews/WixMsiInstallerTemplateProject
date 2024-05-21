@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   
-  <!-- We can use if statements -->
+  <!-- We can use conditionalsstatements  and create variables:  -->
   
   <?if $(var.Platform)=x64 ?>
     <!-- Define our own variable called ProductCode which will be available via $(var.ProductCode)-->
@@ -21,8 +21,8 @@
            UpgradeCode="0b57ad7b-48a8-42ba-a851-eb6a5f8cfa62">
     
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"
-             Keywords="Installer" Description="StuOrg's HelloWix 1.0 Installer"
-             Comments="HellowWix is a registered trademark of StuOrg Ltd." Manufacturer="StuOrg."         
+             Keywords="Installer" Description="StuOrg's MyApp 1.0 Installer"
+             Comments="MyApp is a registered trademark of StuOrg Ltd." Manufacturer="StuOrg."         
     /> <!-- Package Guid changes with each new new built -->
 
     <!-- Shown if the user tries to install a older version of this package -->

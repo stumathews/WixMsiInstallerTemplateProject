@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WixLocalization Culture="en-us" xmlns="http://schemas.microsoft.com/wix/2006/localization">
-	<String Id="ProductName_x86">HelloWix (32 bit)</String>
-	<String Id="ProductName_x64">HelloWix (64 bit)</String>
+	<String Id="ProductName_x86">MyApp (32 bit)</String>
+	<String Id="ProductName_x64">MyApp (64 bit)</String>
 </WixLocalization>

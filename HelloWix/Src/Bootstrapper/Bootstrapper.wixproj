@@ -46,8 +46,8 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HelloWix\HelloWix.wixproj">
-      <Name>HelloWix</Name>
+    <ProjectReference Include="..\HelloWix\MyApp.Installer.wixproj">
+      <Name>MyApp.Installer</Name>
       <Project>{f70bcd06-3ff6-408a-a2ad-933fe0e4dbb5}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

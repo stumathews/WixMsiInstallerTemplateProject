@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>321ff9ff-0907-4ff5-97ac-add9d637bff1</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>WebApi.Installer</OutputName>
+    <OutputType>Package</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DotNetGeneratedComponents.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <!-- Clean previous build folder -->
+    <Exec Command="rd /s /q \..\WebApi\bin\$(Configuration)\net8.0\win-$(Platform)" />
+    <!-- Publish dotnet core app -->
+    <Exec Command="dotnet publish ..\WebApi\WebApi.csproj -c $(Configuration) -r win-$(Platform)" />
+    <!-- Get/Extract assembly version from a key file and we'll use that as the msi build version too -->
+    <GetAssemblyIdentity AssemblyFiles="..\WebApi\bin\$(Configuration)\net8.0\win-$(Platform)\publish\WebApi.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+    </GetAssemblyIdentity>
+    <PropertyGroup>
+      <!-- This creates a Wix variable called BuildVersion that we can refer to as $(var.BuildVersion) in the .wxs soruce files-->
+      <DefineConstants>BuildVersion=%(AssemblyVersion.Version);BasePath=..\WebApi\bin\$(Configuration)\net8.0\win-$(Platform)\publish</DefineConstants>
+    </PropertyGroup>
+    <!-- Harvest all file components from publish folder -->
+    <HeatDirectory RunAsSeparateProcess="$(RunWixToolsOutOfProc)" OutputFile="DotNetGeneratedComponents.wxs" DirectoryRefId="INSTALLFOLDER" ComponentGroupName="DotNetGeneratedComponents" SuppressCom="true" Directory="..\WebApi\bin\$(Configuration)\net8.0\win-$(Platform)\publish" SuppressFragments="true" SuppressRegistry="true" SuppressRootDirectory="true" AutoGenerateGuids="false" GenerateGuidsNow="true" ToolPath="$(WixToolPath)" PreProcessorVariable="var.BasePath" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

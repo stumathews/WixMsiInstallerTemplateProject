@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="WebApi.Installer" Language="1033" Version="1.0.0.0" Manufacturer="StuOrg" UpgradeCode="d25018ab-47ac-4b05-8dbb-40e97d3b8767">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" /> 
+
+		<Feature Id="ProductFeature" Title="WebApi.Installer" Level="1">
+			<ComponentGroupRef Id="DotNetGeneratedComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="WebApi.Installer" />
+			</Directory>
+		</Directory>
+	</Fragment>
+</Wix>

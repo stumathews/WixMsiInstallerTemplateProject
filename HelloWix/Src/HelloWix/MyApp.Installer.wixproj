@@ -6,10 +6,11 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>f70bcd06-3ff6-408a-a2ad-933fe0e4dbb5</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>HelloWix</OutputName>
+    <OutputName>MyApp.Installer</OutputName>
     <OutputType>Package</OutputType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Name>MyApp.Installer</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
