@@ -2,40 +2,40 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmpA0863526952F7834E7C922F065E4C8A8" Guid="{404F885F-C84A-4F72-A583-0A8AA1616F68}">
+            <Component Id="cmpA0863526952F7834E7C922F065E4C8A8" Guid="{3148999D-081B-4B07-967A-78F4F9C8B7FE}">
                 <File Id="filC04B02D0CCC2D5CCC1013B35DE86DB29" KeyPath="yes" Source="$(var.BasePath)\appsettings.Development.json" />
             </Component>
-            <Component Id="cmpF82FCA80BBAF44D285C97F10993DEEE6" Guid="{1FA438EE-E22B-46A2-A614-7AF66C722D0D}">
+            <Component Id="cmpF82FCA80BBAF44D285C97F10993DEEE6" Guid="{E0FA1AD2-E5FA-4CB8-A644-C7EED8388868}">
                 <File Id="fil840B80AC19861C7F9F04FBDCFAE331CE" KeyPath="yes" Source="$(var.BasePath)\appsettings.json" />
             </Component>
-            <Component Id="cmpA4611957CEC527FB6A9C663A4D40B1C3" Guid="{6988599C-AEAE-4D6B-B2FB-7BA3659FB0FB}">
+            <Component Id="cmpA4611957CEC527FB6A9C663A4D40B1C3" Guid="{C2B689F6-A305-46E3-B7A8-5655A97A2948}">
                 <File Id="fil49B671F56429C90F9997AA866BA60A70" KeyPath="yes" Source="$(var.BasePath)\Microsoft.OpenApi.dll" />
             </Component>
-            <Component Id="cmpA5FED8161FD657378956DA3AE3A09E60" Guid="{D9EDD9DD-B198-46AF-8311-B5C4F416C2F1}">
+            <Component Id="cmpA5FED8161FD657378956DA3AE3A09E60" Guid="{6070B42C-86DD-4F4E-AB7D-D2C40F4642F9}">
                 <File Id="fil7EB779D9EA12DB7462D668771EA0457E" KeyPath="yes" Source="$(var.BasePath)\Swashbuckle.AspNetCore.Swagger.dll" />
             </Component>
-            <Component Id="cmp77BB727475A9C0C22B87E602EE0EA12F" Guid="{2CAD5FEF-2A14-49C3-8B3C-E7A5864D9038}">
+            <Component Id="cmp77BB727475A9C0C22B87E602EE0EA12F" Guid="{44E35024-1516-4021-8A6D-9A2C5B310637}">
                 <File Id="fil06F08ABCD4DA3566917909BDD198019A" KeyPath="yes" Source="$(var.BasePath)\Swashbuckle.AspNetCore.SwaggerGen.dll" />
             </Component>
-            <Component Id="cmpAE2F03F3EC76BE9BA5592C207C8B71D3" Guid="{11C18EF7-54BB-4137-8586-8106A19CED32}">
+            <Component Id="cmpAE2F03F3EC76BE9BA5592C207C8B71D3" Guid="{2F1B60EE-587A-47A4-B433-BDB1CB7CE0F0}">
                 <File Id="fil9925E9534260FA55C001BC83EC0C02A9" KeyPath="yes" Source="$(var.BasePath)\Swashbuckle.AspNetCore.SwaggerUI.dll" />
             </Component>
-            <Component Id="cmpB139B49DF4DF8F44C525B449EA8187F7" Guid="{18368B8B-6315-49CD-B2FC-DE5246AE7222}">
+            <Component Id="cmpB139B49DF4DF8F44C525B449EA8187F7" Guid="{83928525-703A-40B3-B14F-17CE3F45B1EC}">
                 <File Id="filE7A3E65CC622C2E3B9B57707B12C9645" KeyPath="yes" Source="$(var.BasePath)\web.config" />
             </Component>
-            <Component Id="cmpDDA99BD2D85DE6A62F0ED421F389D3F2" Guid="{DDBD3849-81A6-4195-A7A0-1064CD67520C}">
+            <Component Id="cmpDDA99BD2D85DE6A62F0ED421F389D3F2" Guid="{98FC2748-953F-4A0E-88B6-38244E3C239D}">
                 <File Id="fil55A62B0BA1A216C837CF9386162A7F3B" KeyPath="yes" Source="$(var.BasePath)\WebApi.deps.json" />
             </Component>
-            <Component Id="cmp0708D333BE18CBD10600D747D7EE7F36" Guid="{3097D027-AFE2-4F33-ABE9-D98C3C7E9268}">
+            <Component Id="cmp0708D333BE18CBD10600D747D7EE7F36" Guid="{252CEBA9-97FC-4AA5-AAE7-7EDF45D2951F}">
                 <File Id="fil08881A6F1C6B0137A6C7FA5D9ADE76C4" KeyPath="yes" Source="$(var.BasePath)\WebApi.dll" />
             </Component>
-            <Component Id="cmp34EA571ADF9B0955552D641CCF43717A" Guid="{22FD0491-B36B-41A0-8A2C-C6F8B9AB344C}">
+            <Component Id="cmp34EA571ADF9B0955552D641CCF43717A" Guid="{FA89FE9D-8166-48F3-979F-80DB044CC62B}">
                 <File Id="filE604102D90E49498B0FCBFBA8C91CD06" KeyPath="yes" Source="$(var.BasePath)\WebApi.exe" />
             </Component>
-            <Component Id="cmp3D7EFCE14C1B191C47EFE97B96AD8482" Guid="{478D834C-3686-476B-AB9B-B6999F77B64F}">
+            <Component Id="cmp3D7EFCE14C1B191C47EFE97B96AD8482" Guid="{D6DD910F-BFED-4093-808C-F8FD7EB93E73}">
                 <File Id="filEC546B1C7FA3322E9BB093C492B54BA7" KeyPath="yes" Source="$(var.BasePath)\WebApi.pdb" />
             </Component>
-            <Component Id="cmp0EB9CE6FAB69DA1D1EE610AE97F93E63" Guid="{6D368BC1-C52B-43C6-BAF0-6A2F98878052}">
+            <Component Id="cmp0EB9CE6FAB69DA1D1EE610AE97F93E63" Guid="{54A10003-1F79-45E9-AA62-F65ECAF7ABDC}">
                 <File Id="filE9741B9B89C597B49D790D39678989BB" KeyPath="yes" Source="$(var.BasePath)\WebApi.runtimeconfig.json" />
             </Component>
         </DirectoryRef>

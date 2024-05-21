@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="WebApi.Installer" Language="1033" Version="1.0.0.0" Manufacturer="StuOrg" UpgradeCode="d25018ab-47ac-4b05-8dbb-40e97d3b8767">
+	
+   <?if $(var.Platform)=x64 ?>
+    <!-- Define our own variable called ProductCode which will be available via $(var.ProductCode)-->
+    <?define ProductCode = "{A8735DB6-92E6-48F9-B96F-C563B1743060}" ?>
+  <?else?>
+    <?define ProductCode = "{628CA0D8-DB08-49D4-BA26-7447CA3E75AB}" ?>
+  <?endif?>
+  
+  <Product Id="$(var.ProductCode)" Name="!(loc.ProductName_$(var.Platform))" Language="1033" Version="$(var.BuildVersion)" Manufacturer="StuOrg" UpgradeCode="d25018ab-47ac-4b05-8dbb-40e97d3b8767">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
@@ -13,9 +21,15 @@
 
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="WebApi.Installer" />
-			</Directory>
+      <?if $(var.Platform)=x64 ?>
+				<Directory Id="ProgramFiles64Folder">
+					<Directory Id="INSTALLFOLDER" Name="WebApi.Installer" />
+				</Directory>
+			<?else?>
+				<Directory Id="ProgramFilesFolder">
+					<Directory Id="INSTALLFOLDER" Name="WebApi.Installer" />
+				</Directory>
+			<?endif?>			
 		</Directory>
 	</Fragment>
 </Wix>

@@ -10,13 +10,11 @@
     <?define ProductCode = "{859E52C8-A05B-4533-A128-2C4148CEE6B2}" ?>
   <?endif?>
   
-  <?define Version = 1.0.0.0 ?>
-  
   <!-- Note that the if we use '*' instead of $(var.ProductCode), that means that a new Product Id GUID will be generated every time the MSI package is built -->
 	<!-- Note: we can refer to localized strings and substiture the product code variable -->
   <Product Id="$(var.ProductCode)"
            Name="!(loc.ProductName_$(var.Platform))" Language="1033" 
-           Version="$(var.Version)" 
+           Version="$(var.BuildVersion)" 
            Manufacturer="StuOrg" 
            UpgradeCode="0b57ad7b-48a8-42ba-a851-eb6a5f8cfa62">
     
