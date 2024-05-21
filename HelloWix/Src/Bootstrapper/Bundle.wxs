@@ -22,8 +22,7 @@
     <!-- Search the registry and create two variables to hold the results (Needs WixUtilExtension.dll to be references for this to work)-->
     <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full" Value="Version" Variable="Net4FullVersion" />
     <util:RegistrySearch Root="HKLM" Key="SOFTWARE\Microsoft\Net Framework Setup\NDP\v4\Full" Value="Version" Variable="Net4x64FullVersion" Win64="yes" />
-    
-    
+        
     <!-- Chain contains the ordered list of packages that make up the bundle, and which need to be installed -->
 		<Chain>
       <!-- PackageGroupRef refers to a Group of Payloads (dependnecies) elsewhere in a fragment (See other.wxs for the defintion of MyPackage)-->
