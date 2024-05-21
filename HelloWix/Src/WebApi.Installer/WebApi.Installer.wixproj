@@ -27,6 +27,10 @@
     <OutputPath>bin\$(Configuration)\$(Platform)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+  <!-- This allows self-contained .net apps that are published via dotnet publish with the self-contained option specified to have a reduced in size -->
+  <PropertyGroup>
+    <PublishTrimmed>true</PublishTrimmed>
+</PropertyGroup>
   <ItemGroup>
     <Compile Include="DotNetGeneratedComponents.wxs" />
     <Compile Include="Product.wxs" />
@@ -50,6 +54,7 @@
     <Exec Command="rd /s /q \..\WebApi\bin\$(Configuration)\net8.0\win-$(Platform)" />
     <!-- Publish dotnet core app -->
     <Exec Command="dotnet publish ..\WebApi\WebApi.csproj -c $(Configuration) -r win-$(Platform)" />
+    
     <!-- Get/Extract assembly version from a key file and we'll use that as the msi build version too -->
     <GetAssemblyIdentity AssemblyFiles="..\WebApi\bin\$(Configuration)\net8.0\win-$(Platform)\publish\WebApi.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
