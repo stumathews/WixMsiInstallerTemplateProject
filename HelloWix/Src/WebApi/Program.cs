@@ -7,6 +7,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Allow this .net app to be deployed as a service
+builder.Host.UseWindowsService();
+builder.Services.AddWindowsService();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
