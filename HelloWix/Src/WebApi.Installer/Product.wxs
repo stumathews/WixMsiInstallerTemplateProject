@@ -32,4 +32,84 @@
 			<?endif?>			
 		</Directory>
 	</Fragment>
+  
+  <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="cmpA0863526952F7834E7C922F065E4C8A8" Guid="{317ED46A-F6DC-4960-A3A1-3DAB889594C3}">
+                <File Id="filC04B02D0CCC2D5CCC1013B35DE86DB29" KeyPath="yes" Source="$(var.BasePath)\appsettings.Development.json" />
+            </Component>
+            <Component Id="cmpF82FCA80BBAF44D285C97F10993DEEE6" Guid="{34845589-E885-457F-9D0E-8796E984823A}">
+                <File Id="fil840B80AC19861C7F9F04FBDCFAE331CE" KeyPath="yes" Source="$(var.BasePath)\appsettings.json" />
+            </Component>
+            <Component Id="cmp4821B02BE73098649E26291C3A7DF395" Guid="{64CC5EB0-35F3-4D5F-9DE4-7E8BD6413444}">
+                <File Id="fil1606126DC8971808837BB4DBEB057867" KeyPath="yes" Source="$(var.BasePath)\Microsoft.AspNetCore.Hosting.WindowsServices.dll" />
+            </Component>
+            <Component Id="cmpFD16E629F3B1C17887ACD3B97583CB13" Guid="{582D4A2A-371E-4DF0-965B-C85B9A9959D2}">
+                <File Id="filEFB595E81CA62CF58EF39208C76F7F06" KeyPath="yes" Source="$(var.BasePath)\Microsoft.Extensions.Hosting.WindowsServices.dll" />
+            </Component>
+            <Component Id="cmpA4611957CEC527FB6A9C663A4D40B1C3" Guid="{1E02BF9F-B3B4-4218-A018-AF5CCBF06861}">
+                <File Id="fil49B671F56429C90F9997AA866BA60A70" KeyPath="yes" Source="$(var.BasePath)\Microsoft.OpenApi.dll" />
+            </Component>
+            <Component Id="cmpA5FED8161FD657378956DA3AE3A09E60" Guid="{962E8F7D-C087-4E63-BBC2-1D1F575630B3}">
+                <File Id="fil7EB779D9EA12DB7462D668771EA0457E" KeyPath="yes" Source="$(var.BasePath)\Swashbuckle.AspNetCore.Swagger.dll" />
+            </Component>
+            <Component Id="cmp77BB727475A9C0C22B87E602EE0EA12F" Guid="{6C093D0C-3DD4-46FE-ACD7-B523931A4DB5}">
+                <File Id="fil06F08ABCD4DA3566917909BDD198019A" KeyPath="yes" Source="$(var.BasePath)\Swashbuckle.AspNetCore.SwaggerGen.dll" />
+            </Component>
+            <Component Id="cmpAE2F03F3EC76BE9BA5592C207C8B71D3" Guid="{BAA63233-FF97-4366-AE16-0C646BBB27A2}">
+                <File Id="fil9925E9534260FA55C001BC83EC0C02A9" KeyPath="yes" Source="$(var.BasePath)\Swashbuckle.AspNetCore.SwaggerUI.dll" />
+            </Component>
+            <Component Id="cmp3C5190B580EDFB87D0BC5E835BB950DE" Guid="{D8BD7650-DEAB-4133-BCA5-EB9193D1A32E}">
+                <File Id="fil0B6369FF78F990F18A525D5F0CC6D1AB" KeyPath="yes" Source="$(var.BasePath)\System.ServiceProcess.ServiceController.dll" />
+            </Component>
+            <Component Id="cmpB139B49DF4DF8F44C525B449EA8187F7" Guid="{CE095083-F551-4CFB-8BC1-418DC3E5C7E4}">
+                <File Id="filE7A3E65CC622C2E3B9B57707B12C9645" KeyPath="yes" Source="$(var.BasePath)\web.config" />
+            </Component>
+            <Component Id="cmpDDA99BD2D85DE6A62F0ED421F389D3F2" Guid="{BF639097-D7F7-44C1-A381-3DFBB3F0C5C8}">
+                <File Id="fil55A62B0BA1A216C837CF9386162A7F3B" KeyPath="yes" Source="$(var.BasePath)\WebApi.deps.json" />
+            </Component>
+            <Component Id="cmp0708D333BE18CBD10600D747D7EE7F36" Guid="{DE1B2639-2C6D-45DB-826B-E8AB0CE31CF7}">
+                <File Id="fil08881A6F1C6B0137A6C7FA5D9ADE76C4" KeyPath="yes" Source="$(var.BasePath)\WebApi.dll" />
+            </Component>
+            <Component Id="cmp34EA571ADF9B0955552D641CCF43717A" Guid="{0F462279-7D17-4889-B209-6A34782A5DC6}">
+                <File Id="filE604102D90E49498B0FCBFBA8C91CD06" KeyPath="yes" Source="$(var.BasePath)\WebApi.exe" />
+                <ServiceInstall Id="ServiceInstallation" DisplayName="WebApi" Name="WebApi" ErrorControl="normal" Start="auto" Type="ownProcess" Vital="yes" />
+              
+                  <!-- Tell WiX to start the Service -->
+                    <ServiceControl Id="StartService"
+                                    Start="install"
+                                    Stop="both"
+                                    Remove="uninstall"
+                                    Name="WebApi"
+                                    Wait="yes" />
+                <ServiceControl Id="ServiceControl" Name="WebApi" Stop="both" Remove="uninstall" />
+            </Component>
+            <Component Id="cmp3D7EFCE14C1B191C47EFE97B96AD8482" Guid="{29FE3AC8-1F2D-4C30-A40B-81A926F31920}">
+                <File Id="filEC546B1C7FA3322E9BB093C492B54BA7" KeyPath="yes" Source="$(var.BasePath)\WebApi.pdb" />
+            </Component>
+            <Component Id="cmp0EB9CE6FAB69DA1D1EE610AE97F93E63" Guid="{7BCE1CCD-860B-4203-A303-5C56A58F3695}">
+                <File Id="filE9741B9B89C597B49D790D39678989BB" KeyPath="yes" Source="$(var.BasePath)\WebApi.runtimeconfig.json" />
+            </Component>
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="DotNetGeneratedComponents">
+            <ComponentRef Id="cmpA0863526952F7834E7C922F065E4C8A8" />
+            <ComponentRef Id="cmpF82FCA80BBAF44D285C97F10993DEEE6" />
+            <ComponentRef Id="cmp4821B02BE73098649E26291C3A7DF395" />
+            <ComponentRef Id="cmpFD16E629F3B1C17887ACD3B97583CB13" />
+            <ComponentRef Id="cmpA4611957CEC527FB6A9C663A4D40B1C3" />
+            <ComponentRef Id="cmpA5FED8161FD657378956DA3AE3A09E60" />
+            <ComponentRef Id="cmp77BB727475A9C0C22B87E602EE0EA12F" />
+            <ComponentRef Id="cmpAE2F03F3EC76BE9BA5592C207C8B71D3" />
+            <ComponentRef Id="cmp3C5190B580EDFB87D0BC5E835BB950DE" />
+            <ComponentRef Id="cmpB139B49DF4DF8F44C525B449EA8187F7" />
+            <ComponentRef Id="cmpDDA99BD2D85DE6A62F0ED421F389D3F2" />
+            <ComponentRef Id="cmp0708D333BE18CBD10600D747D7EE7F36" />
+            <ComponentRef Id="cmp34EA571ADF9B0955552D641CCF43717A" />
+            <ComponentRef Id="cmp3D7EFCE14C1B191C47EFE97B96AD8482" />
+            <ComponentRef Id="cmp0EB9CE6FAB69DA1D1EE610AE97F93E63" />
+        </ComponentGroup>
+    </Fragment>
+  
 </Wix>
